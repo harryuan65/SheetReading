@@ -2,4 +2,4 @@ dist
 node_modules
 yarn-*.log
 dev
-assets/love_me_like_that.mp3
+src/assets/love_me_like_that.mp3
