@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="/dist/output.css" rel="stylesheet">
+  </head>
+  <body class="bg-sky-50">
+    <% @images_per_page = (1..16).each_slice(3) %>
+    <div class="page-container">
+      <% @images_per_page.each_slice(2).with_index do |(left, right), page| %>
+        <div class="page flex h-screen">
+          <h1><%= page %></h1>
+          <div class="left grid grid-cols-1 justify-start w-[50vw] m-4">
+            <% left&.each do |i| %>
+              <img src="images/<%= i %>.png" alt="<%= i %>.png" class="inline-block mt-2">
+            <% end %>
+          </div>
+          <div class="bg-slate-800 w-1"></div>
+          <div class="right grid grid-cols-1 items-start w-[50vw] m-4">
+            <% right&.each do |i| %>
+              <img src="images/<%= i %>.png" alt="<%= i %>.png" class="inline-block mt-2">
+            <% end %>
+          </div>
+          <div class="border-emerald-400 border-2 h-4 w-4"></div>
+        </div>
+      <% end %>
+    </div>
+  </body>
+</html>

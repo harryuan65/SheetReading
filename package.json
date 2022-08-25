@@ -1,0 +1,9 @@
+{
+  "name": "love_me_like_that",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.1.8"
+  }
+}
