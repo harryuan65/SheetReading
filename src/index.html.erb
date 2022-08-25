@@ -7,26 +7,53 @@
     <title>Document</title>
     <link href="/dist/output.css" rel="stylesheet">
   </head>
-  <body class="bg-sky-50">
-    <% @images_per_page = (1..16).each_slice(3) %>
-    <div class="page-container">
-      <% @images_per_page.each_slice(2).with_index do |(left, right), page| %>
-        <div class="page flex h-screen">
-          <h1><%= page %></h1>
-          <div class="left grid grid-cols-1 justify-start w-[50vw] m-4">
-            <% left&.each do |i| %>
-              <img src="images/<%= i %>.png" alt="<%= i %>.png" class="inline-block mt-2">
-            <% end %>
+  <body class="bg-white box-border relative">
+    <% @images_per_page = (1..16).each_slice(5) %>
+    <div class="page-container relative h-screen max-w-screen min-w-screen overflow-hidden">
+      <div class="pages flex absolute left-0 duration-150" id="pages">
+        <% @images_per_page.each_slice(2).with_index do |(left, right), page| %>
+          <div class="page flex" id="page<%= page %>">
+            <div class="left flex flex-col p-8 justify-between items-center h-screen w-[50vw] m-auto">
+              <% left&.each do |i| %>
+                <img src="images/<%= i %>.png" alt="<%= i %>.png" class="inline-block">
+              <% end %>
+            </div>
+            <div class="bg-slate-800 w-1"></div>
+            <div class="right flex flex-col p-8 justify-between items-center h-screen w-[50vw] m-auto">
+              <% right&.each do |i| %>
+                <img src="images/<%= i %>.png" alt="<%= i %>.png" class="inline-block">
+              <% end %>
+            </div>
           </div>
-          <div class="bg-slate-800 w-1"></div>
-          <div class="right grid grid-cols-1 items-start w-[50vw] m-4">
-            <% right&.each do |i| %>
-              <img src="images/<%= i %>.png" alt="<%= i %>.png" class="inline-block mt-2">
-            <% end %>
-          </div>
-          <div class="border-emerald-400 border-2 h-4 w-4"></div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
+    <script>
+      let lefts = document.getElementsByClassName('left');
+      for(let i = 0 ; i < lefts.length ; i++) {
+        if(i===0) continue;
+
+        let container  = lefts[i];
+        container.addEventListener('click', (event) => {
+          let innerPages = document.getElementById("pages");
+          let width = window.screen.width;
+          let newLeft = Number(innerPages.style.left.replace(/px/, '') ) + width;
+          innerPages.style.left = `${newLeft}px`
+        })
+      }
+
+      let rights = document.getElementsByClassName('right');
+      for(let i = 0 ;i < rights.length ; i++) {
+        if(i===rights.length-1) break;
+
+        let container  = rights[i];
+        container.addEventListener('click', (event) => {
+          let innerPages = document.getElementById("pages");
+          let width = window.screen.width;
+          let newRight = Number(innerPages.style.left.replace(/px/, '') ) - width;
+          innerPages.style.left = `${newRight}px`
+        })
+      }
+    </script>
   </body>
 </html>
