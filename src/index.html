@@ -73,40 +73,58 @@
       </div>
     </div>
     <script>
-      let lefts = document.getElementsByClassName('left');
-      for(let i = 0 ; i < lefts.length ; i++) {
-        if(i===0) continue;
+      let currentPage = 0;
+      let lastPage = document.querySelectorAll(".page").length;
+      console.log('currentPage', currentPage, 'lastPage', lastPage);
+      function move(direction) {
+        let innerPages = document.getElementById("pages");
+        let delta = window.screen.width;
+        if (direction === "left" && currentPage < lastPage - 1) {
+          delta *= -1;
+          currentPage += 1
+        } else if (direction === "right" && currentPage > 0) {
+          currentPage -= 1
+        } else {
+          return;
+        }
+        let newLeft = Number(innerPages.style.left.replace(/px/, '') ) + delta;
+        innerPages.style.left = `${newLeft}px`
+      }
 
-        let container  = lefts[i];
-        container.addEventListener('click', (event) => {
-          let innerPages = document.getElementById("pages");
-          let width = window.screen.width;
-          let newLeft = Number(innerPages.style.left.replace(/px/, '') ) + width;
-          innerPages.style.left = `${newLeft}px`
-        })
+      let lefts = document.getElementsByClassName('left');
+      for(let i = 1 ; i < lefts.length ; i++) {
+        lefts[i].addEventListener('click', () => move("right"))
       }
 
       let rights = document.getElementsByClassName('right');
-      for(let i = 0 ;i < rights.length ; i++) {
-        if(i===rights.length-1) break;
-
-        let container  = rights[i];
-        container.addEventListener('click', (event) => {
-          let innerPages = document.getElementById("pages");
-          let width = window.screen.width;
-          let newRight = Number(innerPages.style.left.replace(/px/, '') ) - width;
-          innerPages.style.left = `${newRight}px`
-        })
+      for(let i = 0 ;i < rights.length-1 ; i++) {
+        rights[i].addEventListener('click', () => move("left"))
       }
 
       document.addEventListener('keydown', (event) => {
-        let song = document.getElementById('song');
-        if (event.code == "Space") {
-          if (song.paused) {
-            song.play();
-          } else {
-            song.pause();
+        switch(event.code) {
+          case "Space": {
+            let song = document.getElementById('song');
+            if (event.code == "Space") {
+              if (song.paused) {
+                song.play();
+              } else {
+                song.pause();
+              }
+            }
+            break;
           }
+          case "ArrowLeft": {
+            move("right")
+            break;
+          }
+          case "ArrowRight":{
+            move("left")
+            break;
+          }
+          default:
+            console.log(event.code)
+
         }
       })
     </script>
