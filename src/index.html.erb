@@ -10,7 +10,7 @@
   <body class="bg-white box-border relative">
     <% @images_per_page = (1..16).each_slice(5) %>
     <p class="flex justify-center h-[54px]">
-      <audio controls class="w-[500px]">
+      <audio controls id="song" class="w-[500px]">
         <source src="assets/love_me_like_that.mp3" type="audio/mpeg">
         Your browser does not support the audio tag.
       </audio>
@@ -60,6 +60,17 @@
           innerPages.style.left = `${newRight}px`
         })
       }
+
+      document.addEventListener('keydown', (event) => {
+        let song = document.getElementById('song');
+        if (event.code == "Space") {
+          if (song.paused) {
+            song.play();
+          } else {
+            song.pause();
+          }
+        }
+      })
     </script>
   </body>
 </html>
