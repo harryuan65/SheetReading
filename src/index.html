@@ -19,7 +19,7 @@
       <div class="pages flex absolute left-0 duration-150" id="pages">
         
           <div class="page flex relative" id="page0">
-            <div class="left flex flex-col p-8 justify-between items-center relative h-[calc(100vh-54px)] w-[50vw] m-auto">
+            <div class="left flex flex-col p-8 justify-start items-center relative h-[calc(100vh-54px)] w-[50vw] m-auto">
               
                 <img src="images/1.png" alt="1.png" class="inline-block">
               
@@ -33,7 +33,7 @@
               
             </div>
             <div class="bg-slate-800 w-1"></div>
-            <div class="right flex flex-col p-8 justify-between items-center relative h-[calc(100vh-54px)] w-[50vw] m-auto">
+            <div class="right flex flex-col p-8 justify-start items-center relative h-[calc(100vh-54px)] w-[50vw] m-auto">
               
                 <img src="images/6.png" alt="6.png" class="inline-block">
               
@@ -49,9 +49,11 @@
           </div>
         
           <div class="page flex relative" id="page1">
-            <div class="left flex flex-col p-8 justify-between items-center relative h-[calc(100vh-54px)] w-[50vw] m-auto">
+            <div class="left flex flex-col p-8 justify-start items-center relative h-[calc(100vh-54px)] w-[50vw] m-auto">
               
                 <img src="images/11.png" alt="11.png" class="inline-block">
+              
+                <img src="images/6.png" alt="6.png" class="inline-block">
               
                 <img src="images/12.png" alt="12.png" class="inline-block">
               
@@ -59,11 +61,11 @@
               
                 <img src="images/14.png" alt="14.png" class="inline-block">
               
-                <img src="images/15.png" alt="15.png" class="inline-block">
-              
             </div>
             <div class="bg-slate-800 w-1"></div>
-            <div class="right flex flex-col p-8 justify-between items-center relative h-[calc(100vh-54px)] w-[50vw] m-auto">
+            <div class="right flex flex-col p-8 justify-start items-center relative h-[calc(100vh-54px)] w-[50vw] m-auto">
+              
+                <img src="images/15.png" alt="15.png" class="inline-block">
               
                 <img src="images/16.png" alt="16.png" class="inline-block">
               
@@ -102,26 +104,34 @@
       }
 
       document.addEventListener('keydown', (event) => {
+        let song = document.getElementById('song');
         switch(event.code) {
           case "Space": {
-            let song = document.getElementById('song');
-            if (event.code == "Space") {
+            if (event.code === "Space" && document.activeElement !== song) {
               if (song.paused) {
                 song.play();
               } else {
                 song.pause();
               }
             }
-            break;
           }
+            break;
           case "ArrowLeft": {
-            move("right")
-            break;
+            if(document.activeElement !== song) move("right")
           }
+            break;
           case "ArrowRight":{
-            move("left")
-            break;
+            if(document.activeElement !== song) move("left")
           }
+            break;
+          case "ArrowUp": {
+            song.focus();
+          }
+            break;
+          case "ArrowDown":{
+            song.blur();
+          }
+            break;
           default:
             console.log(event.code)
 
